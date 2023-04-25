@@ -1,13 +1,30 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import RenderCenter from './RenderWidget/RenderCenter'
+import RenderRight from './RenderWidget/RenderRight'
+
+const cloneList = reactive([])
+const handleClone = (item) => {
+  const cloneItem = {
+    ...deepClone(item),
+    id: idGenerate()
+  }
+  cloneList.push(cloneItem)
+}
+
+const curComponent = reactive(null)
+const chooseComp = (item) => {
+  curComponent = item
+}
+
+
 </script>
 
 <template>
   <div class="box">
     <div class="left">
       <h4>控件区</h4>
-      <!-- <draggable
+      <draggable
         v-model="$controlList"
         :group="{
           name: 'rendBox',
@@ -25,11 +42,11 @@
           <div :class="item.icon"></div>
           <div>{{ item.name }}</div>
         </div>
-      </draggable> -->
+      </draggable>
     </div>
     <div class="center">
       <h4>显示区</h4>
-      <!-- <draggable
+      <draggable
         class="center-draggable"
         v-model="cloneList"
         group="rendBox"
@@ -42,16 +59,16 @@
           :curCompId="curComponent && curComponent.id"
           :key="item.id"
           @chooseComp="chooseComp" />
-      </draggable> -->
+      </draggable>
     </div>
     <div class="right">
-      <!-- <RenderRight v-if="curComponent" :curComponent="curComponent"></RenderRight> -->
+      <RenderRight v-if="curComponent" :curComponent="curComponent"></RenderRight>
     </div>
   </div>
 </template>
 
-<style>
-.box {
+<style scoped>
+  .box {
     width: 100%;
     height: 100%;
     background: #eee;
