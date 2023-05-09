@@ -8,19 +8,19 @@ import RenderRight from './RenderWidget/RenderRight.vue'
 import { useSomeConfirStore } from '../store/index'
 
 const cloneList = reactive([])
+const curComponent = ref({})
 const handleClone = (item) => {
   const cloneItem = {
     ...deepClone(item),
     id: idGenerate()
   }
-  console.log(cloneItem)
   cloneList.push(cloneItem)
+  curComponent.value = item
 }
 
-const curComponent = ref({})
 const chooseComp = (item) => {
+  console.log(item, cloneList)
   curComponent.value = item
-  console.log(curComponent)
 }
 
 provide('curComponent', curComponent)
@@ -61,16 +61,17 @@ const store = useSomeConfirStore()
         item-key="id"
         :sort="true"
       >
-        <template #item="{element}">
+        <template #item="{element}" >
           <RenderCenter
             :itemData="element"
             :curCompId="curComponent && curComponent.id"
             :key="element.id"
-            @chooseComp="chooseComp" />
+            @click="chooseComp(element)" />
         </template>
       </draggable>
     </div>
     <div class="right">
+      <h4>属性编辑区</h4>
       <RenderRight v-if="curComponent" :curComponent="curComponent"></RenderRight>
     </div>
   </div>
@@ -97,6 +98,7 @@ const store = useSomeConfirStore()
   }
   .right {
     width: 25%;
+    padding: 0 20px;
   }
   .left,.center,.right {
     background: #fff;

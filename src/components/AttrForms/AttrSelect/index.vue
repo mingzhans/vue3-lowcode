@@ -9,7 +9,7 @@
   })
   const mVal = ref('')
   const emit = defineEmits(['update:mVal'])
-  watch(props.value, () => {
+  watch(() => props.value, () => {
     mVal.value = props.value
   }, {
     immediate: true,

@@ -12,17 +12,17 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits(['chooseComp'])
-const compClick = () => {
-  if(props.curCompId === props.itemData.id) {
-    return
-  }
-  console.log(props.itemData)
-  emit('chooseComp', props.itemData)
-}
+// const compClick = () => {
+//   if(props.curCompId === props.itemData.id) {
+//     return
+//   }
+//   console.log(props.itemData)
+//   emit('chooseComp', props.itemData)
+// }
 </script>
 
 <template>
-  <div class="render-widget" :class="{'active': curCompId === itemData.id}" @click="compClick">
+  <div class="render-widget" :class="{'active': curCompId === itemData.id}">
     <component :is="itemData.component" v-bind="itemData"></component>
   </div>
 </template>
