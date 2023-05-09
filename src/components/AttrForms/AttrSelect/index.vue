@@ -1,16 +1,32 @@
-<template>
-  <el-form-item :label="label">
-    <el-select v-model="mVal" placeholder="请选择">
-      <el-option v-for="item in options" :label="item.label" :value="item.value"></el-option>
-    </el-select>
-  </el-form-item>
-</template>
-
-<script>
-  import attrMixin from '@/mixins/mixin'
-  export default {
-    name: 'AttrSelect',
-    mixins: [attrMixin]
-  }
+<script setup lang="ts">
+  import { ref, watch } from 'vue'
+  const props = withDefaults(defineProps<{
+    label: string,
+    value: string,
+    options: object[]
+  }>(), {
+    label: '',
+  })
+  const mVal = ref('')
+  const emit = defineEmits(['update:mVal'])
+  watch(props.value, () => {
+    mVal.value = props.value
+  }, {
+    immediate: true,
+    deep: true
+  })
+  watch(mVal, () => {
+    emit('update:mVal', mVal)
+  }, {
+    immediate: true,
+    deep: true
+  })
 
 </script>
+<template>
+  <t-form-item :label="label">
+    <t-select v-model="mVal" placeholder="请选择">
+      <t-option v-for="item in options" :label="item.label" :value="item.value"></t-option>
+    </t-select>
+  </t-form-item>
+</template>

@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import RenderCenter from './RenderWidget/RenderCenter'
-import RenderRight from './RenderWidget/RenderRight'
+import { ref, reactive, provide } from 'vue'
+import { Icon } from 'tdesign-icons-vue-next';
+import draggable from 'vuedraggable'
+import { deepClone, idGenerate } from '../utils/index'
+import RenderCenter from './RenderWidget/RenderCenter.vue'
+import RenderRight from './RenderWidget/RenderRight.vue'
+import { useSomeConfirStore } from '../store/index'
 
 const cloneList = reactive([])
 const handleClone = (item) => {
@@ -9,15 +13,19 @@ const handleClone = (item) => {
     ...deepClone(item),
     id: idGenerate()
   }
+  console.log(cloneItem)
   cloneList.push(cloneItem)
 }
 
-const curComponent = reactive(null)
+const curComponent = ref({})
 const chooseComp = (item) => {
-  curComponent = item
+  curComponent.value = item
+  console.log(curComponent)
 }
 
+provide('curComponent', curComponent)
 
+const store = useSomeConfirStore()
 </script>
 
 <template>
@@ -25,23 +33,22 @@ const chooseComp = (item) => {
     <div class="left">
       <h4>控件区</h4>
       <draggable
-        v-model="$controlList"
+        v-model="store.controls"
         :group="{
           name: 'rendBox',
           pull: 'clone'
         }"
         :sort="false"
         :clone="handleClone"
+        item-key="id"
         animation="300"
       >
-        <div
-          v-for="(item, index) in $controlList"
-          :key="index"
-          class="control-item"
-        >
-          <div :class="item.icon"></div>
-          <div>{{ item.name }}</div>
-        </div>
+        <template #item="{element}">
+          <div class="control-item">
+            <icon :name="element.icon"></icon>
+            <div>{{ element.name }}</div>
+            </div>
+        </template>
       </draggable>
     </div>
     <div class="center">
@@ -51,14 +58,16 @@ const chooseComp = (item) => {
         v-model="cloneList"
         group="rendBox"
         :animation="500"
+        item-key="id"
         :sort="true"
       >
-        <RenderCenter
-          v-for="item in cloneList"
-          :itemData="item"
-          :curCompId="curComponent && curComponent.id"
-          :key="item.id"
-          @chooseComp="chooseComp" />
+        <template #item="{element}">
+          <RenderCenter
+            :itemData="element"
+            :curCompId="curComponent && curComponent.id"
+            :key="element.id"
+            @chooseComp="chooseComp" />
+        </template>
       </draggable>
     </div>
     <div class="right">
@@ -103,5 +112,10 @@ const chooseComp = (item) => {
     text-align: center;
     display: inline-block;
     color: blue;
+    cursor: pointer;
+  }
+  .t-icon {
+    width: 2rem;
+    height: 2rem;
   }
 </style>

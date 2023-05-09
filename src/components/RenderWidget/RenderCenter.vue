@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { getComponents } from '@/utils/register'
-// const compListObj = getComponents(require.context('@/components/ControlConfigs', true, /.vue/))
-
+import { reactive, defineComponent } from 'vue'
+import { getComponents } from '../../utils/register'
+import { createApp } from 'vue'
 
 const props = withDefaults(defineProps<{
-  curCompId: string,
+  curCompId: number,
   itemData: object
 }>(), {
-  curCompId: '',
+  curCompId: 0,
   itemData: {},
 })
 
+const emit = defineEmits(['chooseComp'])
 const compClick = () => {
   if(props.curCompId === props.itemData.id) {
     return
   }
-  this.$emit('chooseComp', props.itemData)
+  console.log(props.itemData)
+  emit('chooseComp', props.itemData)
 }
 </script>
 

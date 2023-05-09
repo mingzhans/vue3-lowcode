@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { CenterModal, ComponentModel, FieldsModalCollect } from '../interfaces'
-import { useSomeConfirStore } from '../store/someConfig'
+import { useSomeConfirStore } from '../store/index'
+// import { getComponent } from './register'
 
 class GlobalData {
   constructor() {
@@ -9,14 +10,15 @@ class GlobalData {
   init() {
     this.initConfig()
     // this.registerAttrs()
+    // getComponent()
   }
   // 获取配置组件
    initConfig() {
-    const fileFun = import.meta.globEager('@/components/ControlConfigs/*/*.json')
+    const fileFun = import.meta.globEager('../components/ControlConfigs/*/*.json')
     let fields: FieldsModalCollect = {};
     let controlList: CenterModal[] = []
     Object.keys(fileFun).forEach(key => {
-      const compName = key.split('/') && key.split('/')[1]
+      const compName = key.split('/') && key.split('/')[3]
       const fileJson = fileFun[key] as ComponentModel
       const config: ComponentModel & { component: string } = {
         component: compName,

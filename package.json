@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "pinia": "^2.0.35",
+    "tdesign-icons-vue-next": "^0.1.9",
     "tdesign-vue-next": "^1.3.0",
     "vue": "^3.2.47",
     "vuedraggable": "^4.1.0"
