@@ -1,4 +1,4 @@
-import { ComponentType } from "./enums"
+import { ActionType, ComponentType, EventType } from "./enums"
 
 type AddKey<T> = {
   [key: string]: T
@@ -6,10 +6,12 @@ type AddKey<T> = {
 
 // 属性区域模型
 export interface AttrsModel {
-  label: string;
   type: string;
-  value: string;
-  options?: object[];
+  edit: {
+    label: string;
+    value: string;
+    options?: object[];
+  }
 }
 
 export type FieldsModal = AddKey<AttrsModel>
@@ -35,5 +37,16 @@ export type CenterModal = Pick<ComponentModel, 'name' | 'icon'> & {
 export interface SomeConfigStore {
   '$fields': FieldsModalCollect;
   '$controlList': CenterModal[]
+}
+
+export interface Action {
+  type: ActionType;
+  params: object;
+}
+
+export interface EventModel {
+  type: EventType;
+  target: string;
+  action: Action
 }
 

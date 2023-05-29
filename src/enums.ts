@@ -3,3 +3,13 @@ export enum ComponentType {
   business, // 业务组件
   customize, // 用户自定义组件
 }
+
+export enum EventType {
+  click = 'click',
+  change = 'change',
+}
+
+export enum ActionType {
+  dialog = 'dialog',
+  openUrl = 'openUrl',
+}

@@ -7,20 +7,22 @@ import RenderCenter from './RenderWidget/RenderCenter.vue'
 import RenderRight from './RenderWidget/RenderRight.vue'
 import { useSomeConfirStore } from '../store/index'
 
-const cloneList = reactive([])
+const cloneList = ref([])
 const curComponent = ref({})
 const handleClone = (item) => {
   const cloneItem = {
     ...deepClone(item),
     id: idGenerate()
   }
-  cloneList.push(cloneItem)
-  curComponent.value = item
+  cloneList.value.push(cloneItem)
+  curComponent.value = cloneItem
 }
 
 const chooseComp = (item) => {
   console.log(item, cloneList)
+  console.log('curComponent', curComponent)
   curComponent.value = item
+  console.log('curComponent1111', curComponent)
 }
 
 provide('curComponent', curComponent)

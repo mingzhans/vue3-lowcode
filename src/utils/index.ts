@@ -1,3 +1,5 @@
+import { CenterModal } from "../interfaces";
+
 /**
  * This is just a simple version of deep copy
  * Has a lot of edge cases bug
@@ -42,3 +44,13 @@ function generateId() {
 }
 
 export const idGenerate = generateId()
+
+export const changeVisible = (relatedProps: any[], funString: string, component: CenterModal) => {
+  const fun = new Function(...relatedProps, `return ${funString}`)
+  const valList: any[] = []
+  relatedProps.forEach(key => {
+    const value = component.value && component.value[key] || component[key]
+    valList.push(value)
+  })
+  return !!fun(...valList)
+}

@@ -3,39 +3,47 @@
   "icon": "books",
   "fields": {
     "text": {
-      "label": "按钮文字",
       "type": "string",
-      "value": "按钮"
+      "edit": {
+        "label": "按钮文字",
+        "value": "按钮"
+      }
     },
     "btnType": {
-      "label": "按钮类型",
       "type": "select",
-      "value": "primary",
-      "options": [{
-        "label": "默认",
-        "value": "primary"
-      },{
-        "label": "危险",
-        "value": "danger"
-      },{
-        "label": "信息",
-        "value": "info"
-      }]
+      "edit": {
+        "label": "按钮类型",
+        "value": "primary",
+        "options": [{
+          "label": "默认",
+          "value": "primary"
+        },{
+          "label": "危险",
+          "value": "danger"
+        },{
+          "label": "信息",
+          "value": "info"
+        }]
+      }
     },
     "size": {
-      "label": "按钮大小",
       "type": "select",
-      "value": "medium",
-      "options": [{
-        "label": "最大",
-        "value": "large"
-      },{
-        "label": "中等",
-        "value": "medium"
-      },{
-        "label": "最小",
-        "value": "mini"
-      }]
+      "relatedProps": ["btnType"],
+      "visible": "btnType == 'danger'",
+      "edit": {
+        "label": "按钮大小",
+        "value": "medium",
+        "options": [{
+          "label": "最大",
+          "value": "large"
+        },{
+          "label": "中等",
+          "value": "medium"
+        },{
+          "label": "最小",
+          "value": "mini"
+        }]
+      }
     }
   }
 }
